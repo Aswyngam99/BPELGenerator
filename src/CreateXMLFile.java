@@ -5,9 +5,10 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
-
 public class CreateXMLFile {
-
+    enum REST {
+        Get, Put, Post, Delete;
+    }
     public static void main(String[] args) {
         /*<?xml version="1.0" encoding="UTF-8"?>
             <cars>
@@ -20,36 +21,22 @@ public class CreateXMLFile {
 
         try{
             //root element
-            Element carsElement = new Element("cars");
-            Document doc = new Document(carsElement);
+            Element process = new Element("process");
+            Document document = new Document();
+            GenMethods m = new GenMethods();
 
-            //supercars element
-            Element supercarElement = new Element("supercars");
-            supercarElement.setAttribute(new Attribute("company","Ferrari"));
-
-            //supercars element
-            Element carElement1 = new Element("carname");
-            carElement1.setAttribute(new Attribute("type","formula one"));
-            carElement1.setText("Ferrari 101");
-
-            Element carElement2 = new Element("carname");
-            carElement2.setAttribute(new Attribute("type","sports"));
-            carElement2.setText("Ferrari 202");
-
-            supercarElement.addContent(carElement1);
-            supercarElement.addContent(carElement2);
-
-            doc.getRootElement().addContent(supercarElement);
+            Element riot = m.GenerationRest(process, REST.Get, "http://capteurTemperature/declencher", "","",400);
+            riot.detach();
+            document.setRootElement(riot);
 
             XMLOutputter xmlOutput = new XMLOutputter();
-
             // display ml -----------------------------------------------------------------
             xmlOutput.setFormat(Format.getPrettyFormat());
-            xmlOutput.output(doc, System.out);
+            xmlOutput.output(document, System.out);
 
             // output to any OutputStream (creating file) ---------------------------------
-            FileWriter fileWriter = new FileWriter("C:\\Users\\Lenovo\\file3.xml");
-            xmlOutput.output(doc, fileWriter);
+            /*FileWriter fileWriter = new FileWriter("C:\\Users\\Lenovo\\file4.xml");
+            xmlOutput.output(doc, fileWriter);*/
 
         } catch(IOException e) {
             e.printStackTrace();
