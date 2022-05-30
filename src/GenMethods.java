@@ -1,7 +1,6 @@
 import org.jdom2.Element;
 
 public class GenMethods {
-
     //Methode de generation des activites REST dans le fichier XML -----
     public Element GenerationRest(Element root, CreateXMLFile.REST Type, String uri, String Accept, String Content_Type, int Code){
         Element extensionActivity, var, header;
